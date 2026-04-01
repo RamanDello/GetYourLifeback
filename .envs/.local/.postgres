@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=get_your_life_back
+POSTGRES_USER=hjZCpYOsjDVXAQGssilaLbdKtKmvHibl
+POSTGRES_PASSWORD=4yvx1aL67WYZrJp6NongO9SIqh6a9bFodibNFYFgiW0J7Mu0XurvizsUqrf6Y0VG
