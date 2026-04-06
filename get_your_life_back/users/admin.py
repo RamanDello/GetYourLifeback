@@ -37,6 +37,7 @@ class UserAdmin(auth_admin.UserAdmin):
                 ),
             },
         ),
+        (_("Body Composition"), {"fields": ("body_fat_category",)}),
         (_("Goals & Budget"), {"fields": ("fitness_goal", "monthly_food_budget")}),
         (
             _("Permissions"),

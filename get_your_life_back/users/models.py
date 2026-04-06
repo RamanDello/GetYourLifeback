@@ -49,6 +49,18 @@ class User(AbstractUser):
         HOME_GYM = "home_gym", _("Home Gym")
         NO_EQUIPMENT = "none", _("No Equipment")
 
+    class BodyFatCategory(models.TextChoices):
+        # Male levels (Male10.png – Male25.png)
+        MALE_10 = "m10", _("~10% body fat")
+        MALE_15 = "m15", _("~15% body fat")
+        MALE_20 = "m20", _("~20% body fat")
+        MALE_25 = "m25", _("~25% body fat")
+        # Female levels (female20.png – female35.png)
+        FEMALE_20 = "f20", _("~20% body fat")
+        FEMALE_25 = "f25", _("~25% body fat")
+        FEMALE_30 = "f30", _("~30% body fat")
+        FEMALE_35 = "f35", _("~35% body fat")
+
     class FitnessGoal(models.TextChoices):
         WEIGHT_LOSS = "weight_loss", _("Weight Loss")
         BUILD_MUSCLE = "build_muscle", _("Build Muscle / Maintain")
@@ -92,6 +104,11 @@ class User(AbstractUser):
     )
     available_equipment = CharField(
         max_length=15, choices=AvailableEquipment.choices, blank=True,
+    )
+
+    # --- Body Composition ---
+    body_fat_category = CharField(
+        max_length=15, choices=BodyFatCategory.choices, default="",
     )
 
     # --- Goals & Budget ---

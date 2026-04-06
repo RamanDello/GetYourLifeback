@@ -1,5 +1,6 @@
 from allauth.account.forms import SignupForm
 from allauth.socialaccount.forms import SignupForm as SocialSignupForm
+from django import forms
 from django.contrib.auth import forms as admin_forms
 from django.forms import EmailField
 from django.utils.translation import gettext_lazy as _
@@ -26,6 +27,30 @@ class UserAdminCreationForm(admin_forms.AdminUserCreationForm):
         error_messages = {
             "email": {"unique": _("This email has already been taken.")},
         }
+
+
+class OnboardingStep1Form(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["name", "age", "height", "weight", "gender"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].required = True
+
+
+class BodyFatCategoryForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["body_fat_category"]
+        widgets = {
+            "body_fat_category": forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["body_fat_category"].required = True
 
 
 class UserSignupForm(SignupForm):

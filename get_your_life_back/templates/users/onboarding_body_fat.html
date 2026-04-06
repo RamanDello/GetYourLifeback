@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% load i18n static %}
+
+{% block title %}
+  {% translate "Step 2: Body Fat" %}
+{% endblock title %}
+
+{% block content %}
+  <div class="row justify-content-center mt-4">
+    <div class="col-lg-12">
+      <h2 class="text-center mb-2">{% translate "What best describes your current physique?" %}</h2>
+      <p class="text-center text-muted mb-4">{% translate "Step 2 of 2 — Select the image that looks closest to you." %}</p>
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.body_fat_category }}
+        {% if form.body_fat_category.errors %}
+          <div class="alert alert-danger text-center">{{ form.body_fat_category.errors.0 }}</div>
+        {% endif %}
+
+        <div class="row g-3 justify-content-center mb-4">
+          {% if is_female %}
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="f20"
+                   role="button">
+                <img src="{% static 'images/bodyfat/female20.png' %}"
+                     class="card-img-top"
+                     alt="~20% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~20%</h5>
+                  <small class="text-muted">{% translate "Athletic" %}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="f25"
+                   role="button">
+                <img src="{% static 'images/bodyfat/female25.png' %}"
+                     class="card-img-top"
+                     alt="~25% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~25%</h5>
+                  <small class="text-muted">{% translate "Fit" %}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="f30"
+                   role="button">
+                <img src="{% static 'images/bodyfat/female30.png' %}"
+                     class="card-img-top"
+                     alt="~30% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~30%</h5>
+                  <small class="text-muted">{% translate "Average" %}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="f35"
+                   role="button">
+                <img src="{% static 'images/bodyfat/female35.png' %}"
+                     class="card-img-top"
+                     alt="~35% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~35%</h5>
+                  <small class="text-muted">{% translate "Above Average" %}</small>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="m10"
+                   role="button">
+                <img src="{% static 'images/bodyfat/Male10.png' %}"
+                     class="card-img-top"
+                     alt="~10% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~10%</h5>
+                  <small class="text-muted">{% translate "Shredded" %}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="m15"
+                   role="button">
+                <img src="{% static 'images/bodyfat/Male15.png' %}"
+                     class="card-img-top"
+                     alt="~15% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~15%</h5>
+                  <small class="text-muted">{% translate "Athletic" %}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="m20"
+                   role="button">
+                <img src="{% static 'images/bodyfat/Male20.png' %}"
+                     class="card-img-top"
+                     alt="~20% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~20%</h5>
+                  <small class="text-muted">{% translate "Fit" %}</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="card body-fat-card h-100 text-center"
+                   data-value="m25"
+                   role="button">
+                <img src="{% static 'images/bodyfat/Male25.png' %}"
+                     class="card-img-top"
+                     alt="~25% body fat" />
+                <div class="card-body p-2">
+                  <h5 class="card-title mb-0">~25%</h5>
+                  <small class="text-muted">{% translate "Average" %}</small>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-lg px-5">{% translate "Complete" %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block inline_javascript %}
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const hiddenInput = document.getElementById('{{ form.body_fat_category.id_for_label }}');
+      const cards = document.querySelectorAll('.body-fat-card');
+
+      function selectCard(card) {
+        cards.forEach(c => c.classList.remove('border-primary', 'shadow-lg'));
+        card.classList.add('border-primary', 'shadow-lg');
+        hiddenInput.value = card.dataset.value;
+      }
+
+      cards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.style.transition = 'all 0.2s ease';
+        card.addEventListener('click', () => selectCard(card));
+
+        if (hiddenInput.value === card.dataset.value) {
+          selectCard(card);
+        }
+      });
+    });
+  </script>
+{% endblock inline_javascript %}
