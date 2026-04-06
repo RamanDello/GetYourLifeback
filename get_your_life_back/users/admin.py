@@ -22,6 +22,22 @@ class UserAdmin(auth_admin.UserAdmin):
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (_("Personal info"), {"fields": ("name",)}),
+        (_("Basic Info"), {"fields": ("gender", "age", "height", "weight")}),
+        (_("Daily Routine"), {"fields": ("sleep_hours", "job_type", "hours_sitting", "hours_standing")}),
+        (
+            _("Activity & Sport"),
+            {
+                "fields": (
+                    "daily_steps",
+                    "sport_types",
+                    "training_frequency",
+                    "training_duration",
+                    "experience_level",
+                    "available_equipment",
+                ),
+            },
+        ),
+        (_("Goals & Budget"), {"fields": ("fitness_goal", "monthly_food_budget")}),
         (
             _("Permissions"),
             {
@@ -36,7 +52,7 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["email", "name", "is_superuser"]
+    list_display = ["email", "name", "fitness_goal", "is_superuser"]
     search_fields = ["name"]
     ordering = ["id"]
     add_fieldsets = (
